@@ -55,3 +55,14 @@ func TestWithDone(t *testing.T) {
 		fmt.Println(childCtx.Err())
 	}
 }
+
+func TestWithTimeOut(t *testing.T) {
+	ctx := context.Background()
+	childCtx, cancel := context.WithTimeout(ctx, time.Second*2)
+	defer cancel()
+	ch := childCtx.Done()
+	select {
+	case <-ch:
+		fmt.Println(childCtx.Err())
+	}
+}
